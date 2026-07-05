@@ -5,19 +5,27 @@ import (
 	"time"
 )
 
+type customer struct {
+	name string
+	age  int
+}
+
 type order struct {
 	id        string
 	amount    float32
 	status    string
 	createdAt time.Time
+	customer
 }
 
-func newOrder(id string, amount float32, status string, time time.Time) *order {
+func newOrder(id string, amount float32, status string, time time.Time, name string, age int) *order {
 	return &order{
 		id:        id,
 		amount:    amount,
 		status:    status,
 		createdAt: time,
+
+		customer: customer{name: name, age: age},
 	}
 }
 
@@ -50,11 +58,15 @@ func main() {
 		amount:    100.0,
 		status:    "delivered",
 		createdAt: time.Now(),
+		customer: customer{
+			age:  32,
+			name: "harsh",
+		},
 	}
 
 	fmt.Println(muOrder2)
 
-	order3 := newOrder("3", 100.0, "paid", time.Now())
+	order3 := newOrder("3", 100.0, "paid", time.Now(), "eshan", 16)
 	fmt.Println(order3)
 	fmt.Println(order3.status)
 
@@ -63,4 +75,7 @@ func main() {
 		isGood bool
 	}{"golang", true}
 	fmt.Println(language)
+
+	order3.customer.name = "golang"
+	fmt.Println(order3.name)
 }
